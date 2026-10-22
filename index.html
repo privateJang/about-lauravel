@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Me ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffe1ee;--dot:#ffc9de;--surface:#fff8fb;--ink:#7a2650;--muted:#a8658a;--line:#ffb8d3;--accent:#ff6fa8;--accent-ink:#fff;--soft:#ffd0e3;--like:#e0508d;--dis:#8a6fb5;--star:#ffb020;--c0:#ffd9ec;--c1:#ffe9a8;--c2:#cfeedd}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#3a1830;--dot:#4a2040;--surface:#4a2040;--ink:#ffe3f0;--muted:#e0a3c4;--line:#7d3a66;--accent:#ff79b0;--accent-ink:#4a1233;--soft:#5e2a4e;--like:#ff9cc6;--dis:#c8b0f0;--c0:#6b2f58;--c1:#6b5a2a;--c2:#2f5a48}}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:17px/1.6 Nunito,system-ui,sans-serif;background-color:var(--bg);background-image:radial-gradient(var(--dot) 3px,transparent 3.5px);background-size:30px 30px}
+h1,h2,h3,button,.tab,label,.chip{font-family:Fredoka,Nunito,system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:36px 20px 80px;display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:start}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}}
+aside{position:sticky;top:24px}
+@media(max-width:800px){aside{position:static}}
+.photo{position:relative;background:#fff;padding:12px 12px 46px;border-radius:22px;border:4px solid var(--accent);box-shadow:0 8px 0 var(--line);transform:rotate(-2deg);margin:18px 8px 30px}
+.photo img,.photo .ph{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;background:var(--soft)}
+.photo .bow{position:absolute;top:-34px;left:-26px;width:96px;transform:rotate(-16deg);filter:drop-shadow(0 3px 0 rgba(176,36,90,.25))}
+.photo::after{content:"♡ ♡ ♡";position:absolute;bottom:10px;left:0;right:0;text-align:center;color:var(--accent);letter-spacing:6px;font-size:16px}
+.ph{display:grid;place-items:center;color:var(--muted);font:600 16px Fredoka,sans-serif}
+h1{font-size:44px;line-height:1.05;margin:0 0 6px;font-weight:700;color:var(--ink)}
+.tag{margin:0 0 22px;color:var(--muted)}
+.lk h3{margin:0 0 6px;font-size:19px}
+.lk ul{margin:0 0 16px;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:7px}
+.lk li{padding:2px 14px;border-radius:99px;font-size:15px;font-weight:600;background:var(--surface);border:2.5px solid var(--like);color:var(--like)}
+.lk .dis li{border-color:var(--dis);color:var(--dis);border-style:dashed}
+button{cursor:pointer;border:0;border-radius:99px;padding:8px 18px;font-weight:600;font-size:16px;background:var(--accent);color:var(--accent-ink);box-shadow:0 3px 0 rgba(122,38,80,.25)}
+button:active{transform:translateY(2px);box-shadow:none}
+button.ghost{background:var(--surface);border:2.5px solid var(--line);color:var(--ink);box-shadow:none}
+button.danger{background:var(--surface);color:#d03a62;border:2.5px solid #f2a0b8;box-shadow:none}
+button:focus-visible,.tab:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.tabs{display:flex;gap:8px;margin-bottom:26px;overflow-x:auto;padding:4px 2px 10px}
+.tab{background:var(--surface);border:2.5px solid var(--line);color:var(--muted);font-size:18px;padding:8px 20px;white-space:nowrap;box-shadow:none}
+.tab[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 4px 0 rgba(122,38,80,.25)}
+.now{background:var(--surface);border:3px dashed var(--accent);border-radius:22px;padding:18px 24px;margin-bottom:26px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.now small{font:600 15px Fredoka,sans-serif;color:var(--accent)}
+.now h2{margin:2px 0 0;font-size:28px;line-height:1.15}
+.now p{margin:0;color:var(--muted)}
+.list{background:var(--surface);border:3px solid var(--line);border-radius:22px;padding:6px 22px}
+.row{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:14px 0;border-bottom:2px dotted var(--line);align-items:center}
+.row:last-child{border-bottom:0}
+.row b{font:600 20px Fredoka,sans-serif}
+.row .sub{color:var(--muted);font-size:15px}
+.stars{color:var(--star);letter-spacing:2px;font-size:19px;white-space:nowrap}
+.stars i{color:var(--line);font-style:normal}
+.chip{padding:3px 14px;border-radius:99px;font-weight:600;font-size:15px;white-space:nowrap;border:2px solid var(--line);color:var(--ink)}
+.s0{background:var(--c0)}.s1{background:var(--c1)}.s2{background:var(--c2)}
+.ctl{display:none;grid-column:1/-1;gap:8px}
+body.editing .ctl{display:flex}
+.ctl button{padding:3px 14px;font-size:14px}
+.empty{color:var(--muted);padding:18px 0}
+#editToggle{display:none}
+body.can-edit #editToggle{display:inline-block}
+.only-edit{display:none}
+body.editing .only-edit{display:inline-block}
+.add{margin-bottom:14px}
+dialog{border:3px solid var(--accent);border-radius:22px;padding:24px;width:min(440px,92vw);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(122,38,80,.4)}
+dialog::backdrop{background:rgba(122,38,80,.45)}
+dialog h2{margin:0 0 14px}
+dialog label{display:block;font-weight:600;font-size:16px;margin:12px 0 4px}
+dialog input,dialog textarea,dialog select{width:100%;font:inherit;padding:8px 12px;border-radius:14px;border:2.5px solid var(--line);background:var(--bg);color:var(--ink)}
+dialog .hint{font-size:13px;color:var(--muted);margin:2px 0 0}
+dialog .bar{justify-content:flex-end;margin-top:20px}
+@media(prefers-reduced-motion:no-preference){.tab,button{transition:background .15s,transform .1s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <div class="photo" id="photo"></div>
+    <h1 id="name"></h1>
+    <p class="tag" id="tagline"></p>
+    <div class="lk" id="likes"></div>
+    <div class="bar">
+      <button id="editToggle" class="ghost">Edit page</button>
+      <button id="editProfile" class="only-edit">Edit profile</button>
+    </div>
+    <div class="bar only-edit" id="dataBar">
+      <button class="ghost" id="exp">Export backup</button>
+      <button class="ghost" id="imp">Import backup</button>
+      <input type="file" id="impFile" accept="application/json" hidden>
+    </div>
+  </aside>
+  <main>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="panel" role="tabpanel"></div>
+  </main>
+</div>
+<dialog id="dlg"><form method="dialog" id="form"></form></dialog>
+
+<script>
+const KEY = "aboutme.v2";
+const BOW = `<svg class="bow" viewBox="0 0 80 50" aria-hidden="true"><g stroke="#b0245a" stroke-width="2.5" stroke-linejoin="round"><path d="M40 25C28 3 3 4 6 23c3 20 23 18 34 2Z" fill="#ff6fa8"/><path d="M40 25C52 3 77 4 74 23c-3 20-23 18-34 2Z" fill="#ff6fa8"/><circle cx="40" cy="25" r="8" fill="#ff3d81"/></g></svg>`;
+const T = {
+  reading:{label:"📚 Reading", title:"Book", sub:"Author", kind:"rating", now:"Currently reading"},
+  games:{label:"🎮 Games", title:"Game", sub:"Platform", kind:"status", statuses:["Playing now","Completed","Wishlist"]},
+  dancing:{label:"💃 Dancing", title:"Dance", sub:"Style", kind:"status", statuses:["Learning","Practicing","Mastered"]},
+  movies:{label:"🎬 Movies", title:"Movie", sub:"Director or year", kind:"rating", now:"Currently watching"}
+};
+const defaults = {
+  profile:{name:"Loren/Jang", tagline:"lagi't lagi, para sa bayan. padayon.", photo:"",
+    likes:["color red","AoT Hange","Zerto Two", "VALORANT Viper","Ampalaya","Journaling","Feminism"], dislikes:["confusion","rain","insensitive people"]},
+  current:{reading:{title:"The Hobbit", sub:"J.R.R. Tolkien"}, movies:{title:"", sub:""}},
+  items:{
+    reading:[{title:"Sample Book", sub:"Sample Author", rating:4}],
+    games:[{title:"Sample Game", sub:"PC", status:"Playing now"}],
+    dancing:[{title:"Sample Routine", sub:"Hip hop", status:"Learning"}],
+    movies:[{title:"Sample Movie", sub:"2019", rating:4}]
+  }
+};
+let S, tab = "reading";
+try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+if (!S || !S.items || !S.current) S = structuredClone(defaults);
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { alert("Couldn’t save. The photo may be too large."); } };
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const stars = n => `<span class="stars" aria-label="${n} out of 5">${"★".repeat(n)}<i>${"★".repeat(5-n)}</i></span>`;
+
+function renderProfile(){
+  const p = S.profile;
+  $("#photo").innerHTML = BOW + (p.photo ? `<img src="${p.photo}" alt="Photo of ${esc(p.name)}">` : `<div class="ph">Add your photo ♡</div>`);
+  $("#name").textContent = p.name;
+  $("#tagline").textContent = p.tagline;
+  $("#likes").innerHTML = `<h3>♡ Likes</h3><ul>${p.likes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><h3>✿ Dislikes</h3><ul class="dis">${p.dislikes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+}
+function renderTabs(){
+  $("#tabs").innerHTML = Object.entries(T).map(([k,v]) => `<button class="tab" role="tab" aria-selected="${k===tab}" data-tab="${k}">${v.label}</button>`).join("");
+}
+function renderPanel(){
+  const t = T[tab], list = S.items[tab];
+  let h = "";
+  if (t.now) {
+    const c = S.current[tab] || {};
+    h += `<div class="now"><div><small>♡ ${t.now}</small>${c.title ? `<h2>${esc(c.title)}</h2><p>${esc(c.sub)}</p>` : `<h2>Nothing right now</h2>`}</div><button class="only-edit ghost" data-act="current">Edit</button></div>`;
+  }
+  h += `<button class="only-edit add" data-act="add">Add ${t.title.toLowerCase()}</button>`;
+  h += list.length ? `<div class="list">` + list.map((it,i) => {
+    const side = t.kind === "rating" ? stars(it.rating || 0)
+      : `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>`;
+    return `<div class="row"><div><b>${esc(it.title)}</b><br><span class="sub">${esc(it.sub)}</span></div>${side}<div class="ctl"><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
+  }).join("") + `</div>` : `<p class="empty">Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡</p>`;
+  $("#panel").innerHTML = h;
+}
+const renderAll = () => { renderProfile(); renderTabs(); renderPanel(); };
+
+/* Generic form dialog */
+function openForm(title, fields, onSave, onDelete){
+  const f = $("#form");
+  f.innerHTML = `<h2>${esc(title)}</h2>` + fields.map(x => `<label for="f_${x.k}">${esc(x.label)}</label>` +
+    (x.type === "textarea" ? `<textarea id="f_${x.k}" rows="3">${esc(x.v)}</textarea>`
+     : x.type === "select" ? `<select id="f_${x.k}">${x.options.map(o => `<option ${o===x.v?"selected":""}>${esc(o)}</option>`).join("")}</select>`
+     : x.type === "file" ? `<input id="f_${x.k}" type="file" accept="image/*">`
+     : `<input id="f_${x.k}" type="${x.type||"text"}" value="${esc(x.v)}" ${x.attrs||""}>`) + (x.hint ? `<p class="hint">${esc(x.hint)}</p>` : "")).join("") +
+    `<div class="bar">${onDelete ? `<button type="button" class="danger" id="fDel">Remove</button>` : ""}<button type="button" class="ghost" id="fCancel">Cancel</button><button type="submit">Save changes</button></div>`;
+  $("#fCancel").onclick = () => $("#dlg").close();
+  if (onDelete) $("#fDel").onclick = () => { onDelete(); $("#dlg").close(); };
+  f.onsubmit = async e => {
+    e.preventDefault();
+    const out = {};
+    for (const x of fields) {
+      const el = $("#f_" + x.k);
+      out[x.k] = x.type === "file" ? el.files[0] : el.value;
+    }
+    await onSave(out);
+    $("#dlg").close();
+  };
+  $("#dlg").showModal();
+}
+const clamp = v => Math.min(5, Math.max(0, Math.round(+v) || 0));
+const itemFields = (t, it = {title:"", sub:"", rating:3, status:t.statuses ? t.statuses[0] : ""}) => [
+  {k:"title", label:t.title, v:it.title},
+  {k:"sub", label:t.sub, v:it.sub},
+  t.kind === "rating"
+    ? {k:"rating", label:"Rating (0 to 5 stars)", type:"number", v:it.rating, attrs:'min="0" max="5" step="1"'}
+    : {k:"status", label:"Status", type:"select", options:t.statuses, v:it.status}
+];
+const toItem = (t, o) => ({title:o.title.trim(), sub:o.sub.trim(), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : {status:o.status})});
+function resizePhoto(file){
+  return new Promise(res => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, 700 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = img.width * s; c.height = img.height * s;
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      res(c.toDataURL("image/jpeg", .85));
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+const split = s => s.split(",").map(x => x.trim()).filter(Boolean);
+
+/* Events */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-tab],[data-act]");
+  if (!b) return;
+  if (b.dataset.tab) { tab = b.dataset.tab; renderTabs(); renderPanel(); return; }
+  const t = T[tab], list = S.items[tab], i = +b.dataset.i;
+  const act = b.dataset.act;
+  if (act === "add") openForm("Add " + t.title.toLowerCase(), itemFields(t), o => {
+    list.unshift(toItem(t, o)); save(); renderPanel(); });
+  if (act === "edit") openForm("Edit " + t.title.toLowerCase(), itemFields(t, list[i]), o => {
+    list[i] = toItem(t, o); save(); renderPanel(); });
+  if (act === "del" && confirm("Remove “" + list[i].title + "”?")) { list.splice(i,1); save(); renderPanel(); }
+  if (act === "current") {
+    const c = S.current[tab] || {title:"", sub:""};
+    openForm(t.now, [{k:"title", label:t.title, v:c.title}, {k:"sub", label:t.sub, v:c.sub}],
+      o => { S.current[tab] = {title:o.title.trim(), sub:o.sub.trim()}; save(); renderPanel(); });
+  }
+});
+$("#editToggle").onclick = () => {
+  const on = document.body.classList.toggle("editing");
+  $("#editToggle").textContent = on ? "Done editing" : "Edit page";
+};
+$("#editProfile").onclick = () => {
+  const p = S.profile;
+  openForm("Edit profile", [
+    {k:"photo", label:"Photo", type:"file", hint:"Leave empty to keep your current photo."},
+    {k:"name", label:"Name", v:p.name},
+    {k:"tagline", label:"Short intro", type:"textarea", v:p.tagline},
+    {k:"likes", label:"Likes", v:p.likes.join(", "), hint:"Separate with commas."},
+    {k:"dislikes", label:"Dislikes", v:p.dislikes.join(", "), hint:"Separate with commas."}
+  ], async o => {
+    if (o.photo) p.photo = await resizePhoto(o.photo);
+    p.name = o.name.trim() || "Your Name"; p.tagline = o.tagline.trim();
+    p.likes = split(o.likes); p.dislikes = split(o.dislikes);
+    save(); renderProfile();
+  });
+};
+$("#exp").onclick = () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(S)], {type:"application/json"}));
+  a.download = "about-me-backup.json"; a.click();
+};
+$("#imp").onclick = () => $("#impFile").click();
+$("#impFile").onchange = async e => {
+  try {
+    const d = JSON.parse(await e.target.files[0].text());
+    if (!d.items || !d.profile || !d.current) throw 0;
+    S = d; save(); renderAll();
+  } catch (x) { alert("That file isn’t a valid backup."); }
+};
+if (/[?&]edit\b/.test(location.search)) document.body.classList.add("can-edit");
+renderAll();
+</script>
+</body>
+</html>
