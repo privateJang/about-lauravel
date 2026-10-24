@@ -139,7 +139,7 @@ const defaults = {
   current:{reading:{title:"The Hobbit", sub:"J.R.R. Tolkien"}, movies:{title:"", sub:""}},
   about:{     bio:"Lagi't lagi, para sa bayan. Padayon.",     facts:[{l:"Nickname", v:"Laura/Lauravel"},{l:"Birthday", v:"2004 May 07"},{l:"Height", v:"141cm"},{l:"College course", v:"4th year/Bachelor of Science in Computer Science"},{l:"From", v:"University of Mindanao"}],     favs:[{l:"Color", v:"Red"},{l:"Food", v:"Cake"},{l:"Anime character", v:"Hange"},{l:"Game character", v:"Viper"}],     now:[{l:"Reading", v:"The Hobbit"},{l:"Watching", v:"Add yours"},{l:"Listening to", v:"Add yours"}],     fun:["Add a fun fact about yourself here."]   },   items:{
     reading:[{title:"Sample Book", sub:"Sample Author", rating:4}],
-    games:[{title:"Sample Game", sub:"PC", status:"Playing now"}],
+    games:[{title:"Sample Game", sub:"PC", status:"Playing"}],
     movies:[       {title:"Sample Anime", sub:"2013", rating:5, cat:"Anime"},       {title:"Sample K-Drama", sub:"2020", rating:4, cat:"K-Drama"},       {title:"Sample Movie", sub:"2019", rating:4, cat:"Others"}     ],
     others:[       
       {title:"Dancing", note:"", sub:["Folk Dance","Cheer Dance"]},       
@@ -284,13 +284,17 @@ document.addEventListener("click", e => {
   if (b.dataset.page !== undefined) { page = +b.dataset.page; renderPanel(); return; }
   const t = T[tab], list = S.items[tab], i = +b.dataset.i;
   const act = b.dataset.act;   
-  if (act === "aedit") {     
-    const c = CARDS[page], A = S.about, p = S.profile;     
-    const toPairs = s => s.split("
-").map(x => x.trim()).filter(Boolean).map(x => { const n = x.indexOf(":"); return n < 0 ? {l:x, v:""} : {l:x.slice(0, n).trim(), v:x.slice(n + 1).trim()}; });     const toLines = s => s.split("
-").map(x => x.trim()).filter(Boolean);     if (c.type === "text") openForm(c.title, [{k:"v", label:"Write about yourself", type:"textarea", v:A.bio}], o => { A.bio = o.v.trim(); save(); renderPanel(); });     else if (c.type === "pairs") openForm(c.title, [{k:"v", label:"One per line", type:"textarea", v:(A[c.k] || []).map(x => `${x.l}: ${x.v}`).join("
-"), hint:"Write each one like  Height: 160 cm"}], o => { A[c.k] = toPairs(o.v); save(); renderPanel(); });     else if (c.type === "lines") openForm(c.title, [{k:"v", label:"One per line", type:"textarea", v:(A[c.k] || []).join("
-")}], o => { A[c.k] = toLines(o.v); save(); renderPanel(); });     else openForm(c.title, [{k:"likes", label:"Likes", v:p.likes.join(", "), hint:"Separate with commas."}, {k:"dislikes", label:"Dislikes", v:p.dislikes.join(", "), hint:"Separate with commas."}], o => { p.likes = split(o.likes); p.dislikes = split(o.dislikes); save(); renderPanel(); });     return;   }
+  if (act === "aedit") {
+    const NL = String.fromCharCode(10);
+    const c = CARDS[page], A = S.about, p = S.profile;
+    const toLines = s => s.split(NL).map(x => x.trim()).filter(Boolean);
+    const toPairs = s => toLines(s).map(x => { const n = x.indexOf(":"); return n < 0 ? {l:x, v:""} : {l:x.slice(0, n).trim(), v:x.slice(n + 1).trim()}; });
+    if (c.type === "text") openForm(c.title, [{k:"v", label:"Write about yourself", type:"textarea", v:A.bio}], o => { A.bio = o.v.trim(); save(); renderPanel(); });
+    else if (c.type === "pairs") openForm(c.title, [{k:"v", label:"One per line", type:"textarea", v:(A[c.k] || []).map(x => `${x.l}: ${x.v}`).join(NL), hint:"Write each one like  Height: 160 cm"}], o => { A[c.k] = toPairs(o.v); save(); renderPanel(); });
+    else if (c.type === "lines") openForm(c.title, [{k:"v", label:"One per line", type:"textarea", v:(A[c.k] || []).join(NL)}], o => { A[c.k] = toLines(o.v); save(); renderPanel(); });
+    else openForm(c.title, [{k:"likes", label:"Likes", v:p.likes.join(", "), hint:"Separate with commas."}, {k:"dislikes", label:"Dislikes", v:p.dislikes.join(", "), hint:"Separate with commas."}], o => { p.likes = split(o.likes); p.dislikes = split(o.dislikes); save(); renderPanel(); });
+    return;
+  }
   if (act === "add") openForm("Add " + t.title.toLowerCase(), itemFields(t), o => {
     list.unshift(toItem(t, o)); page = 0; save(); renderPanel(); });
   if (act === "edit") openForm("Edit " + t.title.toLowerCase(), itemFields(t, list[i]), o => {
