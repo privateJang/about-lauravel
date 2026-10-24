@@ -54,7 +54,30 @@ button:focus-visible,.tab:focus-visible,input:focus-visible,textarea:focus-visib
 body.editing .ctl{display:flex}
 .ctl button{padding:3px 14px;font-size:14px} 
   button:disabled{opacity:.4;cursor:default} .subs{margin:8px 0 2px;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px} .subs li{padding:1px 14px;border-radius:99px;background:var(--soft);font-weight:600;font-size:15px} .chip.note{margin-left:10px;font-size:13px;padding:1px 10px}
-.empty{color:var(--muted);padding:18px 0}
+.empty{color:var(--muted);padding:18px 0} 
+  .cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px} 
+  .cat{background:var(--surface);border:2.5px solid var(--line);color:var(--muted);padding:4px 16px;font-size:15px;box-shadow:none} 
+  .cat[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)} 
+  .pager{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:18px} 
+  .pager button{padding:4px 14px;font-size:15px} 
+  .pg{min-width:40px;background:var(--surface);border:2.5px solid var(--line);color:var(--muted);box-shadow:none} 
+  .pg[aria-current=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)} 
+  .links{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 4px} 
+  .links a{padding:3px 16px;border-radius:99px;border:2.5px solid var(--accent);color:var(--accent);background:var(--surface);font:600 15px Fredoka,sans-serif;text-decoration:none} 
+  .links a:hover{background:var(--accent);color:var(--accent-ink)} 
+  .card{background:var(--surface);border:3px solid var(--line);border-radius:22px;padding:22px 26px;min-height:240px} 
+  .card h2{margin:0 0 14px;font-size:26px} 
+  .card .bio{white-space:pre-line;margin:0} 
+  .kvs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px} 
+  .kv{background:var(--bg);border-radius:16px;padding:8px 14px} 
+  .kv small{display:block;font:600 13px Fredoka,sans-serif;color:var(--accent)} 
+  .kv span{font-weight:700} 
+  .funs{margin:0;padding:0;list-style:none} 
+  .funs li{padding:6px 0 6px 28px;position:relative;border-bottom:2px dotted var(--line)} 
+  .funs li::before{content:"✿";position:absolute;left:0;color:var(--accent)} 
+#search{width:100%;font:inherit;padding:10px 18px;border-radius:99px;border:2.5px solid 
+var(--line);background:var(--surface);color:var(--ink);margin-bottom:18px} 
+#search:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 #editToggle{display:none}
 body.can-edit #editToggle{display:inline-block}
 .only-edit{display:none}
@@ -76,7 +99,7 @@ dialog .bar{justify-content:flex-end;margin-top:20px}
     <div class="photo" id="photo"></div>
     <h1 id="name"></h1>
     <p class="tag" id="tagline"></p>
-    <div class="lk" id="likes"></div>
+    <div class="links" id="links"></div>
     <div class="bar">
       <button id="editToggle" class="ghost">Edit page</button>
       <button id="editProfile" class="only-edit">Edit profile</button>
@@ -88,7 +111,8 @@ dialog .bar{justify-content:flex-end;margin-top:20px}
     </div>
   </aside>
   <main>
-    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="tabs" role="tablist" id="tabs"></div>     
+    <input id="search" type="search" placeholder="Search this tab ♡" aria-label="Search this tab">
     <div id="panel" role="tabpanel"></div>
   </main>
 </div>
@@ -97,20 +121,26 @@ dialog .bar{justify-content:flex-end;margin-top:20px}
 <script>
 const KEY = "aboutme.v2";
 const BOW = `<svg class="bow" viewBox="0 0 80 50" aria-hidden="true"><g stroke="#b0245a" stroke-width="2.5" stroke-linejoin="round"><path d="M40 25C28 3 3 4 6 23c3 20 23 18 34 2Z" fill="#ff6fa8"/><path d="M40 25C52 3 77 4 74 23c-3 20-23 18-34 2Z" fill="#ff6fa8"/><circle cx="40" cy="25" r="8" fill="#ff3d81"/></g></svg>`;
-const T = {
+const CARDS = [   {k:"bio", title:"💗 About me", type:"text"},   
+               {k:"facts", title:"✨ Quick facts", type:"pairs"},   
+               {k:"favs", title:"🍰 Favorites", type:"pairs"},   
+               {k:"now", title:"🌸 Currently into", type:"pairs"},   
+               {k:"fun", title:"🎀 Fun facts", type:"lines"},   
+               {k:"likes", title:"♡ Likes & dislikes", type:"likes"} ]; 
+  const T = {   about:{label:"💗 About", kind:"about"},
   reading:{label:"📚 Reading", title:"Book", sub:"Author", kind:"rating", now:"Currently reading"},
   games:{label:"🎮 Games", title:"Game", sub:"Platform", subOptions:["PC","Mobile"], kind:"status", statuses:["Playing","Only When Invited","Rarely","Completed","Wishlist"]},  
-  movies:{label:"🎬 Movies", title:"Movie", sub:"Director or year", kind:"rating", now:"Currently watching"},
+  movies:{label:"🎬 Movies", title:"Title", sub:"Year or notes", categories:["Anime","K-Drama","Others"], kind:"rating", now:"Currently watching"},
   others:{label:"✨ Others", title:"Hobby", sub:"", kind:"groups"}
 };
 const defaults = {
-  profile:{name:"Loren/Jang", tagline:"lagi't lagi, para sa bayan. padayon.", photo:"photo.jpg",
+  profile:{name:"Loren/Jang", tagline:"lagi't lagi, para sa bayan. padayon.", photo:"photo.jpg", socials:[{l:"Instagram", u:"https://instagram.com/"}, {l:"Discord", u:"https://discord.com/"}],
     likes:["color red","Feminism","CAKE","AoT Hange","VALORANT Viper","Ampalaya"], dislikes:["confusion","rain","insensitive people"]},
   current:{reading:{title:"The Hobbit", sub:"J.R.R. Tolkien"}, movies:{title:"", sub:""}},
-  items:{
+  about:{     bio:"Lagi't lagi, para sa bayan. Padayon.",     facts:[{l:"Nickname", v:"Laura/Lauravel"},{l:"Birthday", v:"2004 May 07"},{l:"Height", v:"141cm"},{l:"College course", v:"4th year/Bachelor of Science in Computer Science"},{l:"From", v:"University of Mindanao"}],     favs:[{l:"Color", v:"Red"},{l:"Food", v:"Cake"},{l:"Anime character", v:"Hange"},{l:"Game character", v:"Viper"}],     now:[{l:"Reading", v:"The Hobbit"},{l:"Watching", v:"Add yours"},{l:"Listening to", v:"Add yours"}],     fun:["Add a fun fact about yourself here."]   },   items:{
     reading:[{title:"Sample Book", sub:"Sample Author", rating:4}],
     games:[{title:"Sample Game", sub:"PC", status:"Playing now"}],
-    movies:[{title:"Sample Movie", sub:"2019", rating:4}],
+    movies:[       {title:"Sample Anime", sub:"2013", rating:5, cat:"Anime"},       {title:"Sample K-Drama", sub:"2020", rating:4, cat:"K-Drama"},       {title:"Sample Movie", sub:"2019", rating:4, cat:"Others"}     ],
     others:[       
       {title:"Dancing", note:"", sub:["Folk Dance","Cheer Dance"]},       
       {title:"Crochet", note:"", sub:[]},       
@@ -119,10 +149,18 @@ const defaults = {
     ],
   }
 };
-let S, tab = "reading";
+const PAGE_SIZE = 5; 
+  let S, tab = "about", query = "", cat = "", page = 0;
 try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
 if (!S || !S.items || !S.current) S = structuredClone(defaults); if (!S.items.others) S.items.others = structuredClone(defaults.items.others);
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { alert("Couldn’t save. The photo may be too large."); } };
+function ensure(){   
+  if (!S.items.others) S.items.others = structuredClone(defaults.items.others);   
+  if (!S.about) S.about = structuredClone(defaults.about);   
+  if (!S.profile.socials) S.profile.socials = structuredClone(defaults.profile.socials); 
+} 
+  ensure(); 
+  const save = () => 
+    { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { alert("Couldn’t save. The photo may be too large."); } };
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const stars = n => `<span class="stars" aria-label="${n} out of 5">${"★".repeat(n)}<i>${"★".repeat(5-n)}</i></span>`;
@@ -132,30 +170,52 @@ function renderProfile(){
   $("#photo").innerHTML = BOW + (p.photo ? `<img src="${p.photo}" alt="Photo of ${esc(p.name)}">` : `<div class="ph">Add your photo ♡</div>`);
   $("#name").textContent = p.name;
   $("#tagline").textContent = p.tagline;
-  $("#likes").innerHTML = `<h3>♡ Likes</h3><ul>${p.likes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><h3>✿ Dislikes</h3><ul class="dis">${p.dislikes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
-}
+  const safe = u => /^(https?:\/\/|mailto:)/i.test(u) ? u : "https://" + u;
+  $("#links").innerHTML = (p.socials || []).map(x => `<a href="${esc(safe(x.u))}" target="_blank" rel="noopener">${esc(x.l)}</a>`).join("");}
 function renderTabs(){
   $("#tabs").innerHTML = Object.entries(T).map(([k,v]) => `<button class="tab" role="tab" aria-selected="${k===tab}" data-tab="${k}">${v.label}</button>`).join("");
 }
+function renderAbout(){
+  const pages = CARDS.length;
+  if (page >= pages) page = pages - 1;
+  const c = CARDS[page], A = S.about, p = S.profile;
+  const chips = a => (a || []).map(x => `<li>${esc(x)}</li>`).join("");
+  let body;
+  if (c.type === "text") body = `<p class="bio">${esc(A.bio)}</p>`;
+  else if (c.type === "pairs") body = `<div class="kvs">${(A[c.k] || []).map(x => `<div class="kv"><small>${esc(x.l)}</small><span>${esc(x.v)}</span></div>`).join("")}</div>`;
+  else if (c.type === "lines") body = `<ul class="funs">${(A[c.k] || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  else body = `<div class="lk"><h3>♡ Likes</h3><ul>${chips(p.likes)}</ul><h3>✿ Dislikes</h3><ul class="dis">${chips(p.dislikes)}</ul></div>`;
+  const pager = `<div class="pager"><button class="ghost" data-page="${page-1}" ${page===0?"disabled":""}>‹ Prev</button>${CARDS.map((x, n) => `<button class="pg" data-page="${n}" aria-current="${n===page}" aria-label="${esc(x.title)}">${n+1}</button>`).join("")}<button class="ghost" data-page="${page+1}" ${page===pages-1?"disabled":""}>Next ›</button></div>`;
+  $("#panel").innerHTML = `<div class="card"><h2>${c.title}</h2>${body}<button class="only-edit ghost" data-act="aedit" style="margin-top:16px">Edit this card</button></div>` + pager;
+}
 function renderPanel(){
   const t = T[tab], list = S.items[tab];
+  $("#search").hidden = t.kind === "about";
+  if (t.kind === "about") return renderAbout();
   let h = "";
   if (t.now) {
     const c = S.current[tab] || {};
     h += `<div class="now"><div><small>♡ ${t.now}</small>${c.title ? `<h2>${esc(c.title)}</h2><p>${esc(c.sub)}</p>` : `<h2>Nothing right now</h2>`}</div><button class="only-edit ghost" data-act="current">Edit</button></div>`;
   }
   h += `<button class="only-edit add" data-act="add">Add ${t.title.toLowerCase()}</button>`;
-  h += list.length ? `<div class="list">` + list.map((it,i) => {
+  const q = query.trim().toLowerCase();
+  if (t.categories) h += `<div class="cats">${["All", ...t.categories].map(c => { const v = c === "All" ? "" : c; return `<button class="cat" data-cat="${v}" aria-pressed="${v === cat}">${c}</button>`; }).join("")}</div>`;
+  const shown = list.map((it,i) => ({it,i})).filter(({it}) => (!cat || !t.categories || (it.cat || "Others") === cat) && (!q || [it.title, it.note, it.status, it.cat].concat(it.sub || []).join(" ").toLowerCase().includes(q)));
+  const pages = Math.max(1, Math.ceil(shown.length / PAGE_SIZE));
+  if (page >= pages) page = pages - 1;
+  const view = shown.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const pager = pages > 1 ? `<div class="pager"><button class="ghost" data-page="${page-1}" ${page===0?"disabled":""}>‹ Prev</button>${Array.from({length:pages}, (_, n) => `<button class="pg" data-page="${n}" aria-current="${n===page}" aria-label="Page ${n+1}">${n+1}</button>`).join("")}<button class="ghost" data-page="${page+1}" ${page===pages-1?"disabled":""}>Next ›</button></div>` : "";
+  h += shown.length ? `<div class="list">` + view.map(({it,i}) => {
     let main, side = "";
     if (t.kind === "groups") {
       main = `<b>${esc(it.title)}</b>${it.note ? `<span class="chip note s1">${esc(it.note)}</span>` : ""}${(it.sub||[]).length ? `<ul class="subs">${it.sub.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
     } else {
-      main = `<b>${esc(it.title)}</b><br><span class="sub">${esc(it.sub)}</span>`;
+      main = `<b>${esc(it.title)}</b><br><span class="sub">${[t.categories ? (it.cat || "Others") : "", it.sub].filter(Boolean).map(esc).join(" · ")}</span>`;
       side = t.kind === "rating" ? stars(it.rating || 0)
         : `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>`;
     }
-    return `<div class="row"><div>${main}</div>${side}<div class="ctl"><button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
-  }).join("") + `</div>` : `<p class="empty">Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡</p>`;
+    return `<div class="row"><div>${main}</div>${side}<div class="ctl"><button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0||q||cat?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1||q||cat?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
+  }).join("") + `</div>` + pager : `<p class="empty">${q ? "No matches found ♡" : `Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡`}</p>`;
   $("#panel").innerHTML = h;
 }
 const renderAll = () => { renderProfile(); renderTabs(); renderPanel(); };
@@ -164,7 +224,7 @@ const renderAll = () => { renderProfile(); renderTabs(); renderPanel(); };
 function openForm(title, fields, onSave, onDelete){
   const f = $("#form");
   f.innerHTML = `<h2>${esc(title)}</h2>` + fields.map(x => `<label for="f_${x.k}">${esc(x.label)}</label>` +
-    (x.type === "textarea" ? `<textarea id="f_${x.k}" rows="3">${esc(x.v)}</textarea>`
+    (x.type === "textarea" ? `<textarea id="f_${x.k}" rows="6">${esc(x.v)}</textarea>`
      : x.type === "select" ? `<select id="f_${x.k}">${x.options.map(o => `<option ${o===x.v?"selected":""}>${esc(o)}</option>`).join("")}</select>`
      : x.type === "file" ? `<input id="f_${x.k}" type="file" accept="image/*">`
      : `<input id="f_${x.k}" type="${x.type||"text"}" value="${esc(x.v)}" ${x.attrs||""}>`) + (x.hint ? `<p class="hint">${esc(x.hint)}</p>` : "")).join("") +
@@ -190,6 +250,7 @@ const itemFields = (t, it = {title:"", sub:"", rating:3, status:t.statuses ? t.s
   {k:"list", label:"Things under it (one per line)", type:"textarea", v:(it.sub || []).join("\n")}
 ] : [
   {k:"title", label:t.title, v:it.title},
+  ...(t.categories ? [{k:"cat", label:"Type", type:"select", options:t.categories, v:it.cat || t.categories[0]}] : []),
   t.subOptions ? {k:"sub", label:t.sub, type:"select", options:t.subOptions, v:it.sub} : {k:"sub", label:t.sub, v:it.sub},
   t.kind === "rating"
     ? {k:"rating", label:"Rating (0 to 5 stars)", type:"number", v:it.rating, attrs:'min="0" max="5" step="1"'}
@@ -197,7 +258,7 @@ const itemFields = (t, it = {title:"", sub:"", rating:3, status:t.statuses ? t.s
 ];
 const toItem = (t, o) => t.kind === "groups"
   ? {title:o.title.trim(), note:o.note.trim(), sub:o.list.split("\n").map(x => x.trim()).filter(Boolean)}
-  : {title:o.title.trim(), sub:o.sub.trim(), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : {status:o.status})};
+  : {title:o.title.trim(), sub:o.sub.trim(), ...(t.categories ? {cat:o.cat} : {}), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : {status:o.status})};
 function resizePhoto(file){
   return new Promise(res => {
     const img = new Image();
@@ -215,13 +276,23 @@ const split = s => s.split(",").map(x => x.trim()).filter(Boolean);
 
 /* Events */
 document.addEventListener("click", e => {
-  const b = e.target.closest("[data-tab],[data-act]");
+  const b = e.target.closest("[data-tab],[data-act],[data-cat],[data-page]");
   if (!b) return;
-  if (b.dataset.tab) { tab = b.dataset.tab; renderTabs(); renderPanel(); return; }
+  if (b.dataset.tab) { tab = b.dataset.tab; query = ""; cat = ""; page = 0; 
+  $("#search").value = ""; renderTabs(); renderPanel(); return; }   
+  if (b.dataset.cat !== undefined) { cat = b.dataset.cat; page = 0; renderPanel(); return; }   
+  if (b.dataset.page !== undefined) { page = +b.dataset.page; renderPanel(); return; }
   const t = T[tab], list = S.items[tab], i = +b.dataset.i;
-  const act = b.dataset.act;
+  const act = b.dataset.act;   
+  if (act === "aedit") {     
+    const c = CARDS[page], A = S.about, p = S.profile;     
+    const toPairs = s => s.split("
+").map(x => x.trim()).filter(Boolean).map(x => { const n = x.indexOf(":"); return n < 0 ? {l:x, v:""} : {l:x.slice(0, n).trim(), v:x.slice(n + 1).trim()}; });     const toLines = s => s.split("
+").map(x => x.trim()).filter(Boolean);     if (c.type === "text") openForm(c.title, [{k:"v", label:"Write about yourself", type:"textarea", v:A.bio}], o => { A.bio = o.v.trim(); save(); renderPanel(); });     else if (c.type === "pairs") openForm(c.title, [{k:"v", label:"One per line", type:"textarea", v:(A[c.k] || []).map(x => `${x.l}: ${x.v}`).join("
+"), hint:"Write each one like  Height: 160 cm"}], o => { A[c.k] = toPairs(o.v); save(); renderPanel(); });     else if (c.type === "lines") openForm(c.title, [{k:"v", label:"One per line", type:"textarea", v:(A[c.k] || []).join("
+")}], o => { A[c.k] = toLines(o.v); save(); renderPanel(); });     else openForm(c.title, [{k:"likes", label:"Likes", v:p.likes.join(", "), hint:"Separate with commas."}, {k:"dislikes", label:"Dislikes", v:p.dislikes.join(", "), hint:"Separate with commas."}], o => { p.likes = split(o.likes); p.dislikes = split(o.dislikes); save(); renderPanel(); });     return;   }
   if (act === "add") openForm("Add " + t.title.toLowerCase(), itemFields(t), o => {
-    list.unshift(toItem(t, o)); save(); renderPanel(); });
+    list.unshift(toItem(t, o)); page = 0; save(); renderPanel(); });
   if (act === "edit") openForm("Edit " + t.title.toLowerCase(), itemFields(t, list[i]), o => {
     list[i] = toItem(t, o); save(); renderPanel(); });
   if (act === "up" && i > 0) { [list[i-1], list[i]] = [list[i], list[i-1]]; save(); renderPanel(); }   if (act === "down" && i < list.length - 1) { [list[i+1], list[i]] = [list[i], list[i+1]]; save(); renderPanel(); }   if (act === "del" && confirm("Remove “" + list[i].title + "”?")) { list.splice(i,1); save(); renderPanel(); }
@@ -240,13 +311,12 @@ $("#editProfile").onclick = () => {
   openForm("Edit profile", [
     {k:"photo", label:"Photo", type:"file", hint:"Leave empty to keep your current photo."},
     {k:"name", label:"Name", v:p.name},
-    {k:"tagline", label:"Short intro", type:"textarea", v:p.tagline},
-    {k:"likes", label:"Likes", v:p.likes.join(", "), hint:"Separate with commas."},
-    {k:"dislikes", label:"Dislikes", v:p.dislikes.join(", "), hint:"Separate with commas."}
+    {k:"tagline", label:"Short intro under your name", type:"textarea", v:p.tagline},
+    {k:"socials", label:"Links", type:"textarea", v:(p.socials || []).map(x => `${x.l} | ${x.u}`).join("\n"), hint:"One per line, like  Instagram | https://instagram.com/yourname"}
   ], async o => {
     if (o.photo) p.photo = await resizePhoto(o.photo);
     p.name = o.name.trim() || "Your Name"; p.tagline = o.tagline.trim();
-    p.likes = split(o.likes); p.dislikes = split(o.dislikes);
+    p.socials = o.socials.split("\n").map(x => x.trim()).filter(Boolean).map(x => { const n = x.indexOf("|"); return n < 0 ? null : {l:x.slice(0, n).trim(), u:x.slice(n + 1).trim()}; }).filter(x => x && x.l && x.u);
     save(); renderProfile();
   });
 };
@@ -260,10 +330,11 @@ $("#impFile").onchange = async e => {
   try {
     const d = JSON.parse(await e.target.files[0].text());
     if (!d.items || !d.profile || !d.current) throw 0;
-    S = d; if (!S.items.others) S.items.others = structuredClone(defaults.items.others); save(); renderAll();
+    S = d; ensure(); if (!S.items.others) S.items.others = structuredClone(defaults.items.others); save(); renderAll();
   } catch (x) { alert("That file isn’t a valid backup."); }
 };
-if (/[?&]edit\b/.test(location.search)) document.body.classList.add("can-edit");
+$("#search").oninput = e => { query = e.target.value; page = 0; renderPanel(); }; 
+  if (/[?&]edit\b/.test(location.search)) document.body.classList.add("can-edit");
 renderAll();
 </script>
 </body>
