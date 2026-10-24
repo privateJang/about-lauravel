@@ -53,7 +53,7 @@ button:focus-visible,.tab:focus-visible,input:focus-visible,textarea:focus-visib
 .ctl{display:none;grid-column:1/-1;gap:8px}
 body.editing .ctl{display:flex}
 .ctl button{padding:3px 14px;font-size:14px} 
-  button:disabled{opacity:.4;cursor:default}
+  button:disabled{opacity:.4;cursor:default} .subs{margin:8px 0 2px;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px} .subs li{padding:1px 14px;border-radius:99px;background:var(--soft);font-weight:600;font-size:15px} .chip.note{margin-left:10px;font-size:13px;padding:1px 10px}
 .empty{color:var(--muted);padding:18px 0}
 #editToggle{display:none}
 body.can-edit #editToggle{display:inline-block}
@@ -99,8 +99,9 @@ const KEY = "aboutme.v2";
 const BOW = `<svg class="bow" viewBox="0 0 80 50" aria-hidden="true"><g stroke="#b0245a" stroke-width="2.5" stroke-linejoin="round"><path d="M40 25C28 3 3 4 6 23c3 20 23 18 34 2Z" fill="#ff6fa8"/><path d="M40 25C52 3 77 4 74 23c-3 20-23 18-34 2Z" fill="#ff6fa8"/><circle cx="40" cy="25" r="8" fill="#ff3d81"/></g></svg>`;
 const T = {
   reading:{label:"📚 Reading", title:"Book", sub:"Author", kind:"rating", now:"Currently reading"},
-  games:{label:"🎮 Games", title:"Game", sub:"Platform", subOptions:["PC","Mobile"], kind:"status", statuses:["Playing","Only When Invited","Rarely","Completed","Wishlist"]},  dancing:{label:"💃 Dancing", title:"Dance", sub:"Style", kind:"status", statuses:["Learning","Practicing","Mastered"]},
-  movies:{label:"🎬 Movies", title:"Movie", sub:"Director or year", kind:"rating", now:"Currently watching"}
+  games:{label:"🎮 Games", title:"Game", sub:"Platform", subOptions:["PC","Mobile"], kind:"status", statuses:["Playing","Only When Invited","Rarely","Completed","Wishlist"]},  
+  movies:{label:"🎬 Movies", title:"Movie", sub:"Director or year", kind:"rating", now:"Currently watching"},
+  others:{label:"✨ Others", title:"Hobby", sub:"", kind:"groups"}
 };
 const defaults = {
   profile:{name:"Loren/Jang", tagline:"lagi't lagi, para sa bayan. padayon.", photo:"photo.jpg",
@@ -109,13 +110,18 @@ const defaults = {
   items:{
     reading:[{title:"Sample Book", sub:"Sample Author", rating:4}],
     games:[{title:"Sample Game", sub:"PC", status:"Playing now"}],
-    dancing:[{title:"Sample Routine", sub:"Hip hop", status:"Learning"}],
     movies:[{title:"Sample Movie", sub:"2019", rating:4}]
+    others:[       
+      {title:"Dancing", note:"", sub:["Folk Dance","Cheer Dance"]},       
+      {title:"Crochet", note:"", sub:[]},       
+      {title:"Writing", note:"", sub:["Copy Reader and Headline Writer","Journaling"]},       
+      {title:"Coffee hopping", note:"soon to be updated", sub:[]}     
+    ],
   }
 };
 let S, tab = "reading";
 try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
-if (!S || !S.items || !S.current) S = structuredClone(defaults);
+if (!S || !S.items || !S.current) S = structuredClone(defaults); if (!S.items.others) S.items.others = structuredClone(defaults.items.others);
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { alert("Couldn’t save. The photo may be too large."); } };
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -140,9 +146,15 @@ function renderPanel(){
   }
   h += `<button class="only-edit add" data-act="add">Add ${t.title.toLowerCase()}</button>`;
   h += list.length ? `<div class="list">` + list.map((it,i) => {
-    const side = t.kind === "rating" ? stars(it.rating || 0)
-      : `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>`;
-    return `<div class="row"><div><b>${esc(it.title)}</b><br><span class="sub">${esc(it.sub)}</span></div>${side}<div class="ctl"><button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
+    let main, side = "";
+    if (t.kind === "groups") {
+      main = `<b>${esc(it.title)}</b>${it.note ? `<span class="chip note s1">${esc(it.note)}</span>` : ""}${(it.sub||[]).length ? `<ul class="subs">${it.sub.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
+    } else {
+      main = `<b>${esc(it.title)}</b><br><span class="sub">${esc(it.sub)}</span>`;
+      side = t.kind === "rating" ? stars(it.rating || 0)
+        : `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>`;
+    }
+    return `<div class="row"><div>${main}</div>${side}<div class="ctl"><button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
   }).join("") + `</div>` : `<p class="empty">Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡</p>`;
   $("#panel").innerHTML = h;
 }
@@ -172,14 +184,20 @@ function openForm(title, fields, onSave, onDelete){
   $("#dlg").showModal();
 }
 const clamp = v => Math.min(5, Math.max(0, Math.round(+v) || 0));
-const itemFields = (t, it = {title:"", sub:"", rating:3, status:t.statuses ? t.statuses[0] : ""}) => [
+const itemFields = (t, it = {title:"", sub:"", rating:3, status:t.statuses ? t.statuses[0] : ""}) => t.kind === "groups" ? [
+  {k:"title", label:"Hobby", v:it.title},
+  {k:"note", label:"Small note (optional)", v:it.note || "", hint:"For example: soon to be updated."},
+  {k:"list", label:"Things under it (one per line)", type:"textarea", v:(it.sub || []).join("\n")}
+] : [
   {k:"title", label:t.title, v:it.title},
   t.subOptions ? {k:"sub", label:t.sub, type:"select", options:t.subOptions, v:it.sub} : {k:"sub", label:t.sub, v:it.sub},
   t.kind === "rating"
     ? {k:"rating", label:"Rating (0 to 5 stars)", type:"number", v:it.rating, attrs:'min="0" max="5" step="1"'}
     : {k:"status", label:"Status", type:"select", options:t.statuses, v:it.status}
 ];
-const toItem = (t, o) => ({title:o.title.trim(), sub:o.sub.trim(), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : {status:o.status})});
+const toItem = (t, o) => t.kind === "groups"
+  ? {title:o.title.trim(), note:o.note.trim(), sub:o.list.split("\n").map(x => x.trim()).filter(Boolean)}
+  : {title:o.title.trim(), sub:o.sub.trim(), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : {status:o.status})};
 function resizePhoto(file){
   return new Promise(res => {
     const img = new Image();
@@ -242,7 +260,7 @@ $("#impFile").onchange = async e => {
   try {
     const d = JSON.parse(await e.target.files[0].text());
     if (!d.items || !d.profile || !d.current) throw 0;
-    S = d; save(); renderAll();
+    S = d; if (!S.items.others) S.items.others = structuredClone(defaults.items.others); save(); renderAll();
   } catch (x) { alert("That file isn’t a valid backup."); }
 };
 if (/[?&]edit\b/.test(location.search)) document.body.classList.add("can-edit");
