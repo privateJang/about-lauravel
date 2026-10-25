@@ -6,7 +6,7 @@
 <title>About Me ♡</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&instdisplay=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#ffe1ee;--dot:#ffc9de;--surface:#fff8fb;--ink:#7a2650;--muted:#a8658a;--line:#ffb8d3;--accent:#ff6fa8;--accent-ink:#fff;--soft:#ffd0e3;--like:#e0508d;--dis:#8a6fb5;--star:#ffb020;--c0:#ffd9ec;--c1:#ffe9a8;--c2:#cfeedd;--c3:#dccff7;--c4:#cfe6ff}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#3a1830;--dot:#4a2040;--surface:#4a2040;--ink:#ffe3f0;--muted:#e0a3c4;--line:#7d3a66;--accent:#ff79b0;--accent-ink:#4a1233;--soft:#5e2a4e;--like:#ff9cc6;--dis:#c8b0f0;--c0:#6b2f58;--c1:#6b5a2a;--c2:#2f5a48;--c3:#4a3a78;--c4:#2f4a6b}}
@@ -52,31 +52,36 @@ button:focus-visible,.tab:focus-visible,input:focus-visible,textarea:focus-visib
 .s0{background:var(--c0)}.s1{background:var(--c1)}.s2{background:var(--c2)}.s3{background:var(--c3)}.s4{background:var(--c4)}
 .ctl{display:none;grid-column:1/-1;gap:8px}
 body.editing .ctl{display:flex}
-.ctl button{padding:3px 14px;font-size:14px} 
-  button:disabled{opacity:.4;cursor:default} .subs{margin:8px 0 2px;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px} .subs li{padding:1px 14px;border-radius:99px;background:var(--soft);font-weight:600;font-size:15px} .chip.note{margin-left:10px;font-size:13px;padding:1px 10px}
-.empty{color:var(--muted);padding:18px 0} 
-  .cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px} 
-  .cat{background:var(--surface);border:2.5px solid var(--line);color:var(--muted);padding:4px 16px;font-size:15px;box-shadow:none} 
-  .cat[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)} 
-  .pager{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:18px} 
-  .pager button{padding:4px 14px;font-size:15px} 
-  .pg{min-width:40px;background:var(--surface);border:2.5px solid var(--line);color:var(--muted);box-shadow:none} 
-  .pg[aria-current=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)} 
-  .links{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 4px} 
-  .links a{padding:3px 16px;border-radius:99px;border:2.5px solid var(--accent);color:var(--accent);background:var(--surface);font:600 15px Fredoka,sans-serif;text-decoration:none} 
-  .links a:hover{background:var(--accent);color:var(--accent-ink)} 
-  .card{background:var(--surface);border:3px solid var(--line);border-radius:22px;padding:22px 26px;min-height:240px} 
-  .card h2{margin:0 0 14px;font-size:26px} 
-  .card .bio{white-space:pre-line;margin:0} 
-  .kvs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px} 
-  .kv{background:var(--bg);border-radius:16px;padding:8px 14px} 
-  .kv small{display:block;font:600 13px Fredoka,sans-serif;color:var(--accent)} 
-  .kv span{font-weight:700} 
-  .funs{margin:0;padding:0;list-style:none} 
-  .funs li{padding:6px 0 6px 28px;position:relative;border-bottom:2px dotted var(--line)} 
-  .funs li::before{content:"✿";position:absolute;left:0;color:var(--accent)} 
-#search{width:100%;font:inherit;padding:10px 18px;border-radius:99px;border:2.5px solid 
-var(--line);background:var(--surface);color:var(--ink);margin-bottom:18px} 
+.ctl button{padding:3px 14px;font-size:14px}
+button:disabled{opacity:.4;cursor:default}
+.subs{margin:8px 0 2px;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.subs li{padding:1px 14px;border-radius:99px;background:var(--soft);font-weight:600;font-size:15px}
+.chip.note{margin-left:10px;font-size:13px;padding:1px 10px}
+.empty{color:var(--muted);padding:18px 0}
+#search{width:100%;font:inherit;padding:10px 18px;border-radius:99px;border:2.5px solid var(--line);background:var(--surface);color:var(--ink);margin-bottom:18px}
+.heart{color:var(--accent)}
+.cstat{font-size:13px;color:var(--muted);margin:10px 0 0;min-height:1em}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cat{background:var(--surface);border:2.5px solid var(--line);color:var(--muted);padding:4px 16px;font-size:15px;box-shadow:none}
+.cat[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.pager{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.pager button{padding:4px 14px;font-size:15px}
+.pg{min-width:40px;background:var(--surface);border:2.5px solid var(--line);color:var(--muted);box-shadow:none}
+.pg[aria-current=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 4px}
+.links a{padding:3px 16px;border-radius:99px;border:2.5px solid var(--accent);color:var(--accent);background:var(--surface);font:600 15px Fredoka,sans-serif;text-decoration:none}
+.links a:hover{background:var(--accent);color:var(--accent-ink)}
+.card{background:var(--surface);border:3px solid var(--line);border-radius:22px;padding:22px 26px;min-height:240px}
+.card h2{margin:0 0 14px;font-size:26px}
+.card .bio{white-space:pre-line;margin:0}
+.kvs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.kv{background:var(--bg);border-radius:16px;padding:8px 14px}
+.kv small{display:block;font:600 13px Fredoka,sans-serif;color:var(--accent)}
+.kv span{font-weight:700}
+.funs{margin:0;padding:0;list-style:none}
+.funs li{padding:6px 0 6px 28px;position:relative;border-bottom:2px dotted var(--line)}
+.funs li::before{content:"✿";position:absolute;left:0;color:var(--accent)}
 #search:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 #editToggle{display:none}
 body.can-edit #editToggle{display:inline-block}
@@ -103,34 +108,47 @@ dialog .bar{justify-content:flex-end;margin-top:20px}
     <div class="bar">
       <button id="editToggle" class="ghost">Edit page</button>
       <button id="editProfile" class="only-edit">Edit profile</button>
+      <button id="logout" class="only-edit ghost">Log out</button>
     </div>
     <div class="bar only-edit" id="dataBar">
       <button class="ghost" id="exp">Export backup</button>
       <button class="ghost" id="imp">Import backup</button>
       <input type="file" id="impFile" accept="application/json" hidden>
     </div>
+  <p class="cstat" id="cloudStatus" role="status"></p>
   </aside>
   <main>
-    <div class="tabs" role="tablist" id="tabs"></div>     
+    <div class="tabs" role="tablist" id="tabs"></div>
     <input id="search" type="search" placeholder="Search this tab ♡" aria-label="Search this tab">
     <div id="panel" role="tabpanel"></div>
   </main>
 </div>
 <dialog id="dlg"><form method="dialog" id="form"></form></dialog>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0"></script>
 <script>
 const KEY = "aboutme.v4";
+// ☁ Online database (Supabase). The publishable key is meant to be public.
+const SUPABASE_URL = "https://zwtrtdwcnvkghpublktm.supabase.co";
+const SUPABASE_KEY = "sb_publishable_-w3_5Abpw10d6iZ0K3xZzw_6N8yCETP";
+const sb = (window.supabase && SUPABASE_URL && SUPABASE_KEY) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+let authed = false;
 const BOW = `<svg class="bow" viewBox="0 0 80 50" aria-hidden="true"><g stroke="#b0245a" stroke-width="2.5" stroke-linejoin="round"><path d="M40 25C28 3 3 4 6 23c3 20 23 18 34 2Z" fill="#ff6fa8"/><path d="M40 25C52 3 77 4 74 23c-3 20-23 18-34 2Z" fill="#ff6fa8"/><circle cx="40" cy="25" r="8" fill="#ff3d81"/></g></svg>`;
-const CARDS = [   {k:"bio", title:"💗 About me", type:"text"},   
-               {k:"facts", title:"✨ Quick facts", type:"pairs"},   
-               {k:"favs", title:"🍰 Favorites", type:"pairs"},   
-               {k:"now", title:"🌸 Currently into", type:"pairs"},   
-               {k:"fun", title:"🎀 Fun facts", type:"lines"},   
-               {k:"likes", title:"♡ Likes & dislikes", type:"likes"} ]; 
-  const T = {   about:{label:"💗 About", kind:"about"},
-  reading:{label:"📚 Reading", title:"Book", sub:"Author", kind:"rating", now:"Currently reading"},
-  games:{label:"🎮 Games", title:"Game", sub:"Platform", subOptions:["PC","Mobile"], kind:"status", statuses:["Playing","Only When Invited","Rarely","Completed","Wishlist"]},  
-  movies:{label:"🎬 Movies", title:"Title", sub:"Year or notes", categories:["Anime","K-Drama","Others"], kind:"rating", now:"Currently watching"},
+const CARDS = [
+  {k:"bio", title:"💗 About me", type:"text"},
+  {k:"facts", title:"✨ Quick facts", type:"pairs"},
+  {k:"favs", title:"🍰 Favorites", type:"pairs"},
+  {k:"now", title:"🌸 Currently into", type:"pairs"},
+  {k:"fun", title:"🎀 Fun facts", type:"lines"},
+  {k:"likes", title:"♡ Likes & dislikes", type:"likes"}
+];
+const GROUPS = {reading:[["reading","📖 Read"],["tbr","🔖 Will read"]]};
+const T = {
+  about:{label:"💗 About", kind:"about"},
+  reading:{label:"📚 Reading", title:"Book", sub:"Author", kind:"rating", favs:true, group:"reading", now:"Currently reading"},
+  tbr:{label:"Will read", title:"Book", sub:"Author", kind:"plain", group:"reading", hidden:true},
+  games:{label:"🎮 Games", title:"Game", sub:"Platform", subOptions:["PC","Mobile"], kind:"status", statuses:["Playing","Only When Invited","Rarely","Completed","Wishlist"]},
+  movies:{label:"🎬 Movies", title:"Title", sub:"Year or notes", categories:["Anime","K-Drama","Others"], kind:"rating", favs:true, now:"Currently watching"},
   others:{label:"✨ Others", title:"Hobby", sub:"", kind:"groups"}
 };
 const defaults = {
@@ -163,26 +181,27 @@ const defaults = {
   },
   items:{
     reading:[
-      {"title":"Seventh Sense","sub":"Purpleyhan","rating":5},
-      {"title":"Tantei High","sub":"Purpleyhan","rating":5},
-      {"title":"To Every You I've Loved Before","sub":"Yomoji Otono","rating":2},
-      {"title":"The Mirror Sisters","sub":"Virginia Andrews","rating":2},
-      {"title":"Rich Dad Poor Dad","sub":"Robert T. Kiyosaki","rating":4},
-      {"title":"The Queen's Choice","sub":"Anne O'Brien","rating":3},
-      {"title":"Attack on Titan Omnibus Volume 4-6","sub":"Hajime Isayama","rating":5},
-      {"title":"Attack on Titan Omnibus Volume 1-3","sub":"Hajime Isayama","rating":5},
-      {"title":"Our Yesterday's Escape","sub":"4reuminct","rating":5},
-      {"title":"Golden Scenery of Tomorrow","sub":"4reuminct","rating":5},
-      {"title":"Avenues of the Diamond","sub":"4reuminct","rating":5},
-      {"title":"Chasing in the Wild","sub":"4reuminct","rating":4},
-      {"title":"Safe Skies, Archer","sub":"4reuminct","rating":5},
-      {"title":"The Rain in España","sub":"4reuminct","rating":3},
-      {"title":"101 Days of Heartbreak","sub":"Laurice Anne Zapanta","rating":3},
-      {"title":"My Husband's Brother","sub":"SOJU","rating":1},
-      {"title":"The Savage Casanova Book 1","sub":"justbreathesofie","rating":2},
-      {"title":"Casanova's Love Game","sub":"PINKYJHEWELII","rating":3},
-      {"title":"XBang Series: ACE","sub":"PINKYJHEWELII","rating":1}
+      {title:"Seventh Sense", sub:"Purpleyhan", rating:5},
+      {title:"Tantei High", sub:"Purpleyhan", rating:5},
+      {title:"To Every You I've Loved Before", sub:"Yomoji Otono", rating:2},
+      {title:"The Mirror Sisters", sub:"Virginia Andrews", rating:2},
+      {title:"Rich Dad Poor Dad", sub:"Robert T. Kiyosaki", rating:4},
+      {title:"The Queen's Choice", sub:"Anne O'Brien", rating:3},
+      {title:"Attack on Titan Omnibus Volume 4-6", sub:"Hajime Isayama", rating:5},
+      {title:"Attack on Titan Omnibus Volume 1-3", sub:"Hajime Isayama", rating:5},
+      {title:"Our Yesterday's Escape", sub:"4reuminct", rating:5},
+      {title:"Golden Scenery of Tomorrow", sub:"4reuminct", rating:5},
+      {title:"Avenues of the Diamond", sub:"4reuminct", rating:5},
+      {title:"Chasing in the Wild", sub:"4reuminct", rating:4},
+      {title:"Safe Skies, Archer", sub:"4reuminct", rating:5},
+      {title:"The Rain in España", sub:"4reuminct", rating:3},
+      {title:"101 Days of Heartbreak", sub:"Laurice Anne Zapanta", rating:3},
+      {title:"My Husband's Brother", sub:"SOJU", rating:1},
+      {title:"The Savage Casanova Book 1", sub:"justbreathesofie", rating:2},
+      {title:"Casanova's Love Game", sub:"PINKYJHEWELII", rating:3},
+      {title:"XBang Series: ACE", sub:"PINKYJHEWELII", rating:1}
     ],
+    tbr:[],
     games:[
       {title:"VALORANT", sub:"PC", status:"Playing"},
       {title:"Mobile Legends: BANG BANG", sub:"Mobile", status:"Only When Invited"},
@@ -191,23 +210,23 @@ const defaults = {
       {title:"PUBG", sub:"Mobile", status:"Rarely"}
     ],
     movies:[
-      {"title":"Hotel del Luna","sub":"Ah Jung-hwan","cat":"K-Drama","rating":4},
-      {"title":"Moon Lovers: Scarlet Heart Ryeo","sub":"Kim Kyu-tae","cat":"K-Drama","rating":5},
-      {"title":"Bridgerton 4: An Offer from a Gentleman","sub":"Shondaland","cat":"Others","rating":5},
-      {"title":"Bridgerton 3: Romancing Mister Bridgerton","sub":"Shondaland","cat":"Others","rating":4},
-      {"title":"Bridgerton 2: The Viscount Who Loved Me","sub":"Shondaland","cat":"Others","rating":4},
-      {"title":"Bridgerton 1: The Duke and I","sub":"Shondaland","cat":"Others","rating":5},
-      {"title":"Taare Zameen Par (Every Child is Special)","sub":"Aamir Khan","cat":"Others","rating":5},
-      {"title":"3 Idiots","sub":"Rajkumar Hirani","cat":"Others","rating":5},
-      {"title":"Business Proposal","sub":"Park Seon-ho","rating":3,"cat":"K-Drama"},
-      {"title":"Shingeki no Kyojin (Attack on Titan) Season 1-4","sub":"Tetsurō Araki (S1–3), Masashi Koizuka (S2–3), Yuichiro Hayashi (S4)","rating":5,"cat":"Anime"},
-      {"title":"DARLING in the FRANXX","sub":"Atsushi Nishigori","rating":5,"cat":"Anime"},
-      {"title":"The Walking Dead (Seasons 1-11)","sub":"AMC","rating":5,"cat":"Others"},
-      {"title":"Golden Scenery of Tomorrow","sub":"Viva One","rating":5,"cat":"Others"},
-      {"title":"Avenues of the Diamond","sub":"Viva One","rating":4,"cat":"Others"},
-      {"title":"Chasing in the Wild","sub":"Viva One","rating":2,"cat":"Others"},
-      {"title":"Safe Skies, Archer","sub":"Viva One","rating":4,"cat":"Others"},
-      {"title":"The Rain in España","sub":"Viva One","rating":3,"cat":"Others"}
+      {title:"Hotel del Luna", sub:"Ah Jung-hwan", rating:4, cat:"K-Drama"},
+      {title:"Moon Lovers: Scarlet Heart Ryeo", sub:"Kim Kyu-tae", rating:5, cat:"K-Drama"},
+      {title:"Bridgerton 4: An Offer from a Gentleman", sub:"Shondaland", rating:5, cat:"Others"},
+      {title:"Bridgerton 3: Romancing Mister Bridgerton", sub:"Shondaland", rating:4, cat:"Others"},
+      {title:"Bridgerton 2: The Viscount Who Loved Me", sub:"Shondaland", rating:4, cat:"Others"},
+      {title:"Bridgerton 1: The Duke and I", sub:"Shondaland", rating:5, cat:"Others"},
+      {title:"Taare Zameen Par (Every Child is Special)", sub:"Aamir Khan", rating:5, cat:"Others"},
+      {title:"3 Idiots", sub:"Rajkumar Hirani", rating:5, cat:"Others"},
+      {title:"Business Proposal", sub:"Park Seon-ho", rating:3, cat:"K-Drama"},
+      {title:"Shingeki no Kyojin (Attack on Titan) Season 1-4", sub:"Tetsurō Araki (S1–3), Masashi Koizuka (S2–3), Yuichiro Hayashi (S4)", rating:5, cat:"Anime"},
+      {title:"DARLING in the FRANXX", sub:"Atsushi Nishigori", rating:5, cat:"Anime"},
+      {title:"The Walking Dead (Seasons 1-11)", sub:"AMC", rating:5, cat:"Others"},
+      {title:"Golden Scenery of Tomorrow", sub:"Viva One", rating:5, cat:"Others"},
+      {title:"Avenues of the Diamond", sub:"Viva One", rating:4, cat:"Others"},
+      {title:"Chasing in the Wild", sub:"Viva One", rating:2, cat:"Others"},
+      {title:"Safe Skies, Archer", sub:"Viva One", rating:4, cat:"Others"},
+      {title:"The Rain in España", sub:"Viva One", rating:3, cat:"Others"}
     ],
     others:[
       {title:"Dancing", note:"", sub:["Folk Dance","Cheer Dance"]},
@@ -217,18 +236,42 @@ const defaults = {
     ]
   }
 };
-const PAGE_SIZE = 5; 
-  let S, tab = "about", query = "", cat = "", page = 0;
+const PAGE_SIZE = 5;
+function ensure(){
+  if (!S.items.others) S.items.others = structuredClone(defaults.items.others);
+  if (!S.items.tbr) S.items.tbr = structuredClone(defaults.items.tbr);
+  if (!S.about) S.about = structuredClone(defaults.about);
+  if (!S.profile.socials) S.profile.socials = structuredClone(defaults.profile.socials);
+}
+let S, tab = "about", query = "", cat = "", favOnly = false, page = 0;
 try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
-if (!S || !S.items || !S.current) S = structuredClone(defaults); if (!S.items.others) S.items.others = structuredClone(defaults.items.others);
-function ensure(){   
-  if (!S.items.others) S.items.others = structuredClone(defaults.items.others);   
-  if (!S.about) S.about = structuredClone(defaults.about);   
-  if (!S.profile.socials) S.profile.socials = structuredClone(defaults.profile.socials); 
-} 
-  ensure(); 
-  const save = () => 
-    { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { alert("Couldn’t save. The photo may be too large."); } };
+if (!S || !S.items || !S.current) S = structuredClone(defaults);
+ensure();
+const setStatus = t => { const el = $("#cloudStatus"); if (el) el.textContent = t; };
+let cloudTimer;
+async function pushCloud(){
+  if (!sb || !authed) return;
+  setStatus("Saving…");
+  try {
+    const { error } = await sb.from("site").upsert({ id: 1, data: S, updated_at: new Date().toISOString() });
+    setStatus(error ? "⚠ Couldn’t save online: " + error.message : "☁ Saved online ♡");
+  } catch (e) { setStatus("⚠ Couldn’t save online"); }
+}
+async function loadCloud(){
+  if (!sb) return false;
+  try {
+    const { data, error } = await sb.from("site").select("data").eq("id", 1).maybeSingle();
+    if (error || !data || !data.data || !data.data.items || !data.data.profile || !data.data.current) return false;
+    S = data.data; ensure();
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+    renderAll();
+    return true;
+  } catch (e) { return false; }
+}
+const save = () => {
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { alert("Couldn’t save. The photo may be too large."); }
+  if (sb && authed) { clearTimeout(cloudTimer); cloudTimer = setTimeout(pushCloud, 500); }
+};
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const stars = n => `<span class="stars" aria-label="${n} out of 5">${"★".repeat(n)}<i>${"★".repeat(5-n)}</i></span>`;
@@ -239,9 +282,10 @@ function renderProfile(){
   $("#name").textContent = p.name;
   $("#tagline").textContent = p.tagline;
   const safe = u => /^(https?:\/\/|mailto:)/i.test(u) ? u : "https://" + u;
-  $("#links").innerHTML = (p.socials || []).map(x => `<a href="${esc(safe(x.u))}" target="_blank" rel="noopener">${esc(x.l)}</a>`).join("");}
+  $("#links").innerHTML = (p.socials || []).map(x => `<a href="${esc(safe(x.u))}" target="_blank" rel="noopener">${esc(x.l)}</a>`).join("");
+}
 function renderTabs(){
-  $("#tabs").innerHTML = Object.entries(T).map(([k,v]) => `<button class="tab" role="tab" aria-selected="${k===tab}" data-tab="${k}">${v.label}</button>`).join("");
+  $("#tabs").innerHTML = Object.entries(T).filter(([k,v]) => !v.hidden).map(([k,v]) => `<button class="tab" role="tab" aria-selected="${k===(T[tab].group || tab)}" data-tab="${k}">${v.label}</button>`).join("");
 }
 function renderAbout(){
   const pages = CARDS.length;
@@ -265,10 +309,15 @@ function renderPanel(){
     const c = S.current[tab] || {};
     h += `<div class="now"><div><small>♡ ${t.now}</small>${c.title ? `<h2>${esc(c.title)}</h2><p>${esc(c.sub)}</p>` : `<h2>Nothing right now</h2>`}</div><button class="only-edit ghost" data-act="current">Edit</button></div>`;
   }
+  if (t.group === "reading") { const n = S.items.reading.length, m = S.items.tbr.length; h += `<div class="stats"><span class="chip s0">📖 ${n} book${n === 1 ? "" : "s"} read</span><span class="chip s2">🔖 ${m} on the list</span></div>`; }
   h += `<button class="only-edit add" data-act="add">Add ${t.title.toLowerCase()}</button>`;
   const q = query.trim().toLowerCase();
-  if (t.categories) h += `<div class="cats">${["All", ...t.categories].map(c => { const v = c === "All" ? "" : c; return `<button class="cat" data-cat="${v}" aria-pressed="${v === cat}">${c}</button>`; }).join("")}</div>`;
-  const shown = list.map((it,i) => ({it,i})).filter(({it}) => (!cat || !t.categories || (it.cat || "Others") === cat) && (!q || [it.title, it.note, it.status, it.cat].concat(it.sub || []).join(" ").toLowerCase().includes(q)));
+  let pills = "";
+  if (GROUPS[t.group]) pills += GROUPS[t.group].map(([k, l]) => `<button class="cat" data-tab="${k}" aria-pressed="${k === tab}">${l}</button>`).join("");
+  if (t.categories) pills += ["All", ...t.categories].map(c => { const v = c === "All" ? "" : c; return `<button class="cat" data-cat="${v}" aria-pressed="${v === cat}">${c}</button>`; }).join("");
+  if (t.favs) pills += `<button class="cat" data-fav="1" aria-pressed="${favOnly}">♥ Favorites</button>`;
+  if (pills) h += `<div class="cats">${pills}</div>`;
+  const shown = list.map((it,i) => ({it,i})).filter(({it}) => (!favOnly || it.fav) && (!cat || !t.categories || (it.cat || "Others") === cat) && (!q || [it.title, it.note, it.status, it.cat].concat(it.sub || []).join(" ").toLowerCase().includes(q)));
   const pages = Math.max(1, Math.ceil(shown.length / PAGE_SIZE));
   if (page >= pages) page = pages - 1;
   const view = shown.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
@@ -278,25 +327,25 @@ function renderPanel(){
     if (t.kind === "groups") {
       main = `<b>${esc(it.title)}</b>${it.note ? `<span class="chip note s1">${esc(it.note)}</span>` : ""}${(it.sub||[]).length ? `<ul class="subs">${it.sub.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
     } else {
-      main = `<b>${esc(it.title)}</b><br><span class="sub">${[t.categories ? (it.cat || "Others") : "", it.sub].filter(Boolean).map(esc).join(" · ")}</span>`;
+      main = `<b>${it.fav ? `<span class="heart">♥</span> ` : ""}${esc(it.title)}</b><br><span class="sub">${[t.categories ? (it.cat || "Others") : "", it.sub].filter(Boolean).map(esc).join(" · ")}</span>`;
       side = t.kind === "rating" ? stars(it.rating || 0)
-        : `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>`;
+        : t.kind === "status" ? `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>` : "";
     }
-    return `<div class="row"><div>${main}</div>${side}<div class="ctl"><button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0||q||cat?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1||q||cat?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
-  }).join("") + `</div>` + pager : `<p class="empty">${q ? "No matches found ♡" : `Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡`}</p>`;
+    return `<div class="row"><div>${main}</div>${side}<div class="ctl">${t.favs ? `<button class="ghost" data-act="fav" data-i="${i}">${it.fav ? "♥ Unfavorite" : "♡ Favorite"}</button>` : ""}${tab === "tbr" ? `<button class="ghost" data-act="done" data-i="${i}">✓ Finished</button>` : ""}<button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0||q||cat||favOnly?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1||q||cat||favOnly?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
+  }).join("") + `</div>` + pager : `<p class="empty">${q ? "No matches found ♡" : favOnly ? "No favorites yet ♡ Turn on Edit page and tap ♡ Favorite on one." : `Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡`}</p>`;
   $("#panel").innerHTML = h;
 }
 const renderAll = () => { renderProfile(); renderTabs(); renderPanel(); };
 
 /* Generic form dialog */
-function openForm(title, fields, onSave, onDelete){
+function openForm(title, fields, onSave, onDelete, okLabel){
   const f = $("#form");
   f.innerHTML = `<h2>${esc(title)}</h2>` + fields.map(x => `<label for="f_${x.k}">${esc(x.label)}</label>` +
     (x.type === "textarea" ? `<textarea id="f_${x.k}" rows="6">${esc(x.v)}</textarea>`
      : x.type === "select" ? `<select id="f_${x.k}">${x.options.map(o => `<option ${o===x.v?"selected":""}>${esc(o)}</option>`).join("")}</select>`
      : x.type === "file" ? `<input id="f_${x.k}" type="file" accept="image/*">`
      : `<input id="f_${x.k}" type="${x.type||"text"}" value="${esc(x.v)}" ${x.attrs||""}>`) + (x.hint ? `<p class="hint">${esc(x.hint)}</p>` : "")).join("") +
-    `<div class="bar">${onDelete ? `<button type="button" class="danger" id="fDel">Remove</button>` : ""}<button type="button" class="ghost" id="fCancel">Cancel</button><button type="submit">Save changes</button></div>`;
+    `<div class="bar">${onDelete ? `<button type="button" class="danger" id="fDel">Remove</button>` : ""}<button type="button" class="ghost" id="fCancel">Cancel</button><button type="submit">${esc(okLabel || "Save changes")}</button></div>`;
   $("#fCancel").onclick = () => $("#dlg").close();
   if (onDelete) $("#fDel").onclick = () => { onDelete(); $("#dlg").close(); };
   f.onsubmit = async e => {
@@ -320,13 +369,12 @@ const itemFields = (t, it = {title:"", sub:"", rating:3, status:t.statuses ? t.s
   {k:"title", label:t.title, v:it.title},
   ...(t.categories ? [{k:"cat", label:"Type", type:"select", options:t.categories, v:it.cat || t.categories[0]}] : []),
   t.subOptions ? {k:"sub", label:t.sub, type:"select", options:t.subOptions, v:it.sub} : {k:"sub", label:t.sub, v:it.sub},
-  t.kind === "rating"
-    ? {k:"rating", label:"Rating (0 to 5 stars)", type:"number", v:it.rating, attrs:'min="0" max="5" step="1"'}
-    : {k:"status", label:"Status", type:"select", options:t.statuses, v:it.status}
+  ...(t.kind === "rating" ? [{k:"rating", label:"Rating (0 to 5 stars)", type:"number", v:it.rating, attrs:'min="0" max="5" step="1"'}]
+    : t.kind === "status" ? [{k:"status", label:"Status", type:"select", options:t.statuses, v:it.status}] : [])
 ];
 const toItem = (t, o) => t.kind === "groups"
   ? {title:o.title.trim(), note:o.note.trim(), sub:o.list.split("\n").map(x => x.trim()).filter(Boolean)}
-  : {title:o.title.trim(), sub:o.sub.trim(), ...(t.categories ? {cat:o.cat} : {}), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : {status:o.status})};
+  : {title:o.title.trim(), sub:o.sub.trim(), ...(t.categories ? {cat:o.cat} : {}), ...(t.kind === "rating" ? {rating:clamp(o.rating)} : t.kind === "status" ? {status:o.status} : {})};
 function resizePhoto(file){
   return new Promise(res => {
     const img = new Image();
@@ -344,14 +392,14 @@ const split = s => s.split(",").map(x => x.trim()).filter(Boolean);
 
 /* Events */
 document.addEventListener("click", e => {
-  const b = e.target.closest("[data-tab],[data-act],[data-cat],[data-page]");
+  const b = e.target.closest("[data-tab],[data-act],[data-cat],[data-page],[data-fav]");
   if (!b) return;
-  if (b.dataset.tab) { tab = b.dataset.tab; query = ""; cat = ""; page = 0; 
-  $("#search").value = ""; renderTabs(); renderPanel(); return; }   
-  if (b.dataset.cat !== undefined) { cat = b.dataset.cat; page = 0; renderPanel(); return; }   
+  if (b.dataset.tab) { tab = b.dataset.tab; query = ""; cat = ""; favOnly = false; page = 0; $("#search").value = ""; renderTabs(); renderPanel(); return; }
+  if (b.dataset.cat !== undefined) { cat = b.dataset.cat; page = 0; renderPanel(); return; }
   if (b.dataset.page !== undefined) { page = +b.dataset.page; renderPanel(); return; }
+  if (b.dataset.fav !== undefined) { favOnly = !favOnly; page = 0; renderPanel(); return; }
   const t = T[tab], list = S.items[tab], i = +b.dataset.i;
-  const act = b.dataset.act;   
+  const act = b.dataset.act;
   if (act === "aedit") {
     const NL = String.fromCharCode(10);
     const c = CARDS[page], A = S.about, p = S.profile;
@@ -363,20 +411,45 @@ document.addEventListener("click", e => {
     else openForm(c.title, [{k:"likes", label:"Likes", v:p.likes.join(", "), hint:"Separate with commas."}, {k:"dislikes", label:"Dislikes", v:p.dislikes.join(", "), hint:"Separate with commas."}], o => { p.likes = split(o.likes); p.dislikes = split(o.dislikes); save(); renderPanel(); });
     return;
   }
+  if (act === "fav") { list[i].fav = !list[i].fav; save(); renderPanel(); }
+  if (act === "done") openForm("Finished reading", [{k:"rating", label:"Your rating (0 to 5 stars)", type:"number", v:5, attrs:'min="0" max="5" step="1"'}], o => { const done = list.splice(i, 1)[0]; S.items.reading.unshift({title:done.title, sub:done.sub, rating:clamp(o.rating)}); save(); renderPanel(); });
   if (act === "add") openForm("Add " + t.title.toLowerCase(), itemFields(t), o => {
     list.unshift(toItem(t, o)); page = 0; save(); renderPanel(); });
   if (act === "edit") openForm("Edit " + t.title.toLowerCase(), itemFields(t, list[i]), o => {
-    list[i] = toItem(t, o); save(); renderPanel(); });
-  if (act === "up" && i > 0) { [list[i-1], list[i]] = [list[i], list[i-1]]; save(); renderPanel(); }   if (act === "down" && i < list.length - 1) { [list[i+1], list[i]] = [list[i], list[i+1]]; save(); renderPanel(); }   if (act === "del" && confirm("Remove “" + list[i].title + "”?")) { list.splice(i,1); save(); renderPanel(); }
+    list[i] = Object.assign({}, list[i], toItem(t, o)); save(); renderPanel(); });
+  if (act === "up" && i > 0) { [list[i-1], list[i]] = [list[i], list[i-1]]; save(); renderPanel(); }
+  if (act === "down" && i < list.length - 1) { [list[i+1], list[i]] = [list[i], list[i+1]]; save(); renderPanel(); }
+  if (act === "del" && confirm("Remove “" + list[i].title + "”?")) { list.splice(i,1); save(); renderPanel(); }
   if (act === "current") {
     const c = S.current[tab] || {title:"", sub:""};
     openForm(t.now, [{k:"title", label:t.title, v:c.title}, {k:"sub", label:t.sub, v:c.sub}],
       o => { S.current[tab] = {title:o.title.trim(), sub:o.sub.trim()}; save(); renderPanel(); });
   }
 });
-$("#editToggle").onclick = () => {
-  const on = document.body.classList.toggle("editing");
+function setEditing(on){
+  document.body.classList.toggle("editing", on);
   $("#editToggle").textContent = on ? "Done editing" : "Edit page";
+}
+$("#editToggle").onclick = () => {
+  if (document.body.classList.contains("editing")) return setEditing(false);
+  if (sb && !authed) {
+    openForm("Log in to edit", [
+      {k:"email", label:"Email", type:"email", v:"", attrs:'autocomplete="username"'},
+      {k:"pw", label:"Password", type:"password", v:"", attrs:'autocomplete="current-password"'}
+    ], async o => {
+      const { error } = await sb.auth.signInWithPassword({ email: o.email.trim(), password: o.pw });
+      if (error) { alert("Couldn’t log in: " + error.message); return; }
+      authed = true;
+      if (!(await loadCloud())) await pushCloud();
+      setEditing(true);
+    }, null, "Log in");
+    return;
+  }
+  setEditing(true);
+};
+$("#logout").onclick = async () => {
+  try { if (sb) await sb.auth.signOut(); } catch (e) {}
+  authed = false; setStatus(""); setEditing(false);
 };
 $("#editProfile").onclick = () => {
   const p = S.profile;
@@ -402,12 +475,18 @@ $("#impFile").onchange = async e => {
   try {
     const d = JSON.parse(await e.target.files[0].text());
     if (!d.items || !d.profile || !d.current) throw 0;
-    S = d; ensure(); if (!S.items.others) S.items.others = structuredClone(defaults.items.others); save(); renderAll();
+    S = d; ensure(); save(); renderAll();
   } catch (x) { alert("That file isn’t a valid backup."); }
 };
-$("#search").oninput = e => { query = e.target.value; page = 0; renderPanel(); }; 
-  if (/[?&]edit\b/.test(location.search)) document.body.classList.add("can-edit");
+$("#search").oninput = e => { query = e.target.value; page = 0; renderPanel(); };
+if (/[?&]edit\b/.test(location.search)) document.body.classList.add("can-edit");
 renderAll();
+(async () => {
+  if (!sb) { $("#logout").remove(); return; }
+  try { const { data } = await sb.auth.getSession(); authed = !!(data && data.session); } catch (e) {}
+  sb.auth.onAuthStateChange((_ev, session) => { authed = !!session; });
+  await loadCloud();
+})();
 </script>
 </body>
 </html>
