@@ -146,7 +146,7 @@ const GROUPS = {reading:[["reading","📖 Read"],["tbr","🔖 Will read"]]};
 const T = {
   about:{label:"💗 About", kind:"about"},
   reading:{label:"📚 Reading", title:"Book", sub:"Author", kind:"rating", favs:true, group:"reading", now:"Currently reading"},
-  tbr:{label:"Will read", title:"Book", sub:"Author", kind:"plain", group:"reading", hidden:true},
+  tbr:{label:"Will read", title:"Book", sub:"Author", kind:"plain", favs:true, group:"reading", hidden:true},
   games:{label:"🎮 Games", title:"Game", sub:"Platform", subOptions:["PC","Mobile"], kind:"status", statuses:["Playing","Only When Invited","Rarely","Completed","Wishlist"]},
   movies:{label:"🎬 Movies", title:"Title", sub:"Year or notes", categories:["Anime","K-Drama","Others"], kind:"rating", favs:true, now:"Currently watching"},
   others:{label:"✨ Others", title:"Hobby", sub:"", kind:"groups"}
@@ -305,9 +305,10 @@ function renderPanel(){
   $("#search").hidden = t.kind === "about";
   if (t.kind === "about") return renderAbout();
   let h = "";
-  if (t.now) {
-    const c = S.current[tab] || {};
-    h += `<div class="now"><div><small>♡ ${t.now}</small>${c.title ? `<h2>${esc(c.title)}</h2><p>${esc(c.sub)}</p>` : `<h2>Nothing right now</h2>`}</div><button class="only-edit ghost" data-act="current">Edit</button></div>`;
+  const gt = T[t.group || tab];
+  if (gt.now) {
+    const c = S.current[t.group || tab] || {};
+    h += `<div class="now"><div><small>♡ ${gt.now}</small>${c.title ? `<h2>${esc(c.title)}</h2><p>${esc(c.sub)}</p>` : `<h2>Nothing right now</h2>`}</div><button class="only-edit ghost" data-act="current">Edit</button></div>`;
   }
   if (t.group === "reading") { const n = S.items.reading.length, m = S.items.tbr.length; h += `<div class="stats"><span class="chip s0">📖 ${n} book${n === 1 ? "" : "s"} read</span><span class="chip s2">🔖 ${m} on the list</span></div>`; }
   h += `<button class="only-edit add" data-act="add">Add ${t.title.toLowerCase()}</button>`;
@@ -329,7 +330,7 @@ function renderPanel(){
     } else {
       main = `<b>${it.fav ? `<span class="heart">♥</span> ` : ""}${esc(it.title)}</b><br><span class="sub">${[t.categories ? (it.cat || "Others") : "", it.sub].filter(Boolean).map(esc).join(" · ")}</span>`;
       side = t.kind === "rating" ? stars(it.rating || 0)
-        : t.kind === "status" ? `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>` : "";
+        : t.kind === "status" ? `<span class="chip s${Math.max(0, t.statuses.indexOf(it.status))}">${esc(it.status || t.statuses[0])}</span>` : `<span class="chip s3">🔖 To read</span>`;
     }
     return `<div class="row"><div>${main}</div>${side}<div class="ctl">${t.favs ? `<button class="ghost" data-act="fav" data-i="${i}">${it.fav ? "♥ Unfavorite" : "♡ Favorite"}</button>` : ""}${tab === "tbr" ? `<button class="ghost" data-act="done" data-i="${i}">✓ Finished</button>` : ""}<button class="ghost" data-act="up" data-i="${i}" aria-label="Move up" ${i===0||q||cat||favOnly?"disabled":""}>↑</button><button class="ghost" data-act="down" data-i="${i}" aria-label="Move down" ${i===list.length-1||q||cat||favOnly?"disabled":""}>↓</button><button class="ghost" data-act="edit" data-i="${i}">Edit</button><button class="danger" data-act="del" data-i="${i}">Remove</button></div></div>`;
   }).join("") + `</div>` + pager : `<p class="empty">${q ? "No matches found ♡" : favOnly ? "No favorites yet ♡ Turn on Edit page and tap ♡ Favorite on one." : `Nothing here yet. Turn on Edit page to add your first ${t.title.toLowerCase()} ♡`}</p>`;
@@ -394,7 +395,7 @@ const split = s => s.split(",").map(x => x.trim()).filter(Boolean);
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-tab],[data-act],[data-cat],[data-page],[data-fav]");
   if (!b) return;
-  if (b.dataset.tab) { tab = b.dataset.tab; query = ""; cat = ""; favOnly = false; page = 0; $("#search").value = ""; renderTabs(); renderPanel(); return; }
+  if (b.dataset.tab) { const sameTab = (T[tab].group || tab) === (T[b.dataset.tab].group || b.dataset.tab); tab = b.dataset.tab; query = ""; cat = ""; favOnly = false; page = 0; $("#search").value = ""; if (!sameTab) renderTabs(); renderPanel(); return; }
   if (b.dataset.cat !== undefined) { cat = b.dataset.cat; page = 0; renderPanel(); return; }
   if (b.dataset.page !== undefined) { page = +b.dataset.page; renderPanel(); return; }
   if (b.dataset.fav !== undefined) { favOnly = !favOnly; page = 0; renderPanel(); return; }
@@ -421,9 +422,9 @@ document.addEventListener("click", e => {
   if (act === "down" && i < list.length - 1) { [list[i+1], list[i]] = [list[i], list[i+1]]; save(); renderPanel(); }
   if (act === "del" && confirm("Remove “" + list[i].title + "”?")) { list.splice(i,1); save(); renderPanel(); }
   if (act === "current") {
-    const c = S.current[tab] || {title:"", sub:""};
-    openForm(t.now, [{k:"title", label:t.title, v:c.title}, {k:"sub", label:t.sub, v:c.sub}],
-      o => { S.current[tab] = {title:o.title.trim(), sub:o.sub.trim()}; save(); renderPanel(); });
+    const gk = t.group || tab, gt = T[gk], c = S.current[gk] || {title:"", sub:""};
+    openForm(gt.now, [{k:"title", label:gt.title, v:c.title}, {k:"sub", label:gt.sub, v:c.sub}],
+      o => { S.current[gk] = {title:o.title.trim(), sub:o.sub.trim()}; save(); renderPanel(); });
   }
 });
 function setEditing(on){
